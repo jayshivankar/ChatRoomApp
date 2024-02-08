@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SignUpScreen(
+    authViewModel: AuthViewModel,
     onNavigateToLogin:()->Unit
 
 ){
@@ -55,16 +56,16 @@ fun SignUpScreen(
                 .fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation()
         )
-        OutlinedTextField(value = email,
-            onValueChange = {email = it},
-            label = {Text("Email")},
+        OutlinedTextField(value = firstname,
+            onValueChange = {firstname= it},
+            label = {Text("firstname")},
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
         )
-        OutlinedTextField(value = email,
-            onValueChange = {email = it},
-            label = {Text("Email")},
+        OutlinedTextField(value = lastname,
+            onValueChange = {lastname = it},
+            label = {Text("lastname")},
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
@@ -73,6 +74,7 @@ fun SignUpScreen(
         Button(
             onClick = {
                 //add the signup fuctionality here
+                authViewModel.signUp(email, password, firstname, lastname)
                 email = ""
                 password = ""
                 firstname = ""
@@ -90,12 +92,8 @@ fun SignUpScreen(
             modifier =Modifier.clickable { //add the navigation to the login screen here
                 onNavigateToLogin()
                  }
-            )
+        )
     }
 }
 
-@Preview
-@Composable
-fun PreviewSignUpScreen(){
-    SignUpScreen( { })
-}
+

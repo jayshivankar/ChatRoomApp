@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -24,11 +25,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoginScreen(
-    onNavigateToSignUp: ()->Unit
+    authViewModel: AuthViewModel,
+    onNavigateToSignUp: ()->Unit,
+    onSignInSuccess: ()->Unit
 
 ){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val result by authViewModel.authResult.observeAsState()
+
 
     Column (
         modifier = Modifier
@@ -55,6 +60,17 @@ fun LoginScreen(
         )
         Button(
             onClick = {
+                      authViewModel.login(email,password)
+                when (result){
+                    is Result.Success -> {
+                        onSignInSuccess()
+                    }
+                    is Result.Error -> {
+
+                    }
+                    else -> {}
+                }
+
 
             },
             modifier = Modifier
@@ -68,9 +84,4 @@ fun LoginScreen(
             modifier = Modifier.clickable { onNavigateToSignUp()}
                 )
     }
-}
-@Preview
-@Composable
-fun PreviewLoginScreen(){
-    LoginScreen(onNavigateToSignUp = {})
 }
