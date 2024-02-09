@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavigationGraph(navController = navController,authViewModel = authViewModel)
 
+
                 }
             }
         }
