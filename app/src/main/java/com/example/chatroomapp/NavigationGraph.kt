@@ -31,7 +31,9 @@ fun NavigationGraph(navController: NavHostController,authViewModel: AuthViewMode
             }
         }
         composable(Screen.ChatRoomScreen.route) {
-            ChatRoomListScreen()
+            ChatRoomListScreen{
+                navController.navigate("${Screen.ChatScreen.route}/${it.id}")
+            }
         }
     }
 }

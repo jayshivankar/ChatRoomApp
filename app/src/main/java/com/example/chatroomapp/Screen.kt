@@ -42,9 +42,14 @@ data class Room(
 
 @Composable
 fun ChatRoomListScreen(
-    roomViewModel:RoomViewModel = viewModel()
+    roomViewModel:RoomViewModel = viewModel(),
+    onJoinClicked:(Room)->Unit
 ){
-    val rooms by roomViewModel.rooms.observeAsState(emptyList())
+    var rooms: List<Room> by remember { mutableStateOf(emptyList()) }
+    roomViewModel.rooms.observeAsState()?.value?.let { rooms = it }
+
+
+
     var showDialog by remember { mutableStateOf(false) }
     var name by remember{ mutableStateOf("") }
     
@@ -57,8 +62,8 @@ fun ChatRoomListScreen(
 
         //Display list of chat rooms
         LazyColumn {
-            items(rooms){
-                RoomItem(room = it)
+            items(rooms){ room ->
+                RoomItem(room = room,onJoinClicked={onJoinClicked(room)})
             }
 
         }
@@ -113,7 +118,7 @@ fun ChatRoomListScreen(
 }
 
 @Composable
-fun RoomItem(room:Room){
+fun RoomItem(room: Room,onJoinClicked:(Room)->Unit ){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,7 +127,7 @@ fun RoomItem(room:Room){
 
     ){
         Text(text = room.name, fontSize = 16.sp, fontWeight = FontWeight.Normal)
-        OutlinedButton(onClick = { }) {
+        OutlinedButton(onClick = { onJoinClicked(room)}) {
             Text("Join")
 
         }

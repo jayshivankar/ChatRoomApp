@@ -31,11 +31,11 @@ class RoomRepository(private val firestore: FirebaseFirestore) {
 }
 
 class RoomViewModel : ViewModel(){
-    private val _rooms = MutableLiveData<List<Room>>()
-    val rooms: LiveData<List<Room>> get() = _rooms
-    private val roomRepository:RoomRepository
+    private val _rooms: MutableLiveData<List<Room>?> = MutableLiveData()
+    val rooms: MutableLiveData<List<Room>?> get() = _rooms
+    private val roomRepository:RoomRepository = RoomRepository(Injection.instance())
+
     init{
-        roomRepository = RoomRepository(Injection.instance())
         loadRooms()
     }
     fun createRoom(name:String){
@@ -56,6 +56,7 @@ class RoomViewModel : ViewModel(){
             }
         }
     }
+
 
 
 }
