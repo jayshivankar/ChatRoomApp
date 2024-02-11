@@ -35,6 +35,10 @@ fun NavigationGraph(navController: NavHostController,authViewModel: AuthViewMode
                 navController.navigate("${Screen.ChatScreen.route}/${it.id}")
             }
         }
+        composable("${Screen.ChatScreen.route}/{roomId}"){
+            val roomId:String = it.arguments?.getString("roomId")?:""
+            ChatScreen(roomId = roomId)
+        }
     }
 }
 

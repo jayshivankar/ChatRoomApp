@@ -21,10 +21,14 @@ import androidx.compose.ui.semantics.SemanticsProperties.Text
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
+private val Message.timestamp: Long
+    get() { }
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun formatTimestamp(timestamp:Long):String {
@@ -55,6 +59,12 @@ private fun formatDate(dateTime: LocalDateTime):String{
     val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     return formatter.format(dateTime)
 }
+
+data class Message(
+    val text: String,
+    val senderFirstName: String,
+    val timestamp: Long
+)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatMessageItem(message: Message) {
