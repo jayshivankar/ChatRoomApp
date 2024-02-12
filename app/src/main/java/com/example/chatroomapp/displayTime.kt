@@ -2,6 +2,7 @@ package com.example.chatroomapp
 
 import android.os.Build
 import android.os.Message
+
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,18 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.semantics.SemanticsProperties.Text
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
 private val Message.timestamp: Long
-    get() { }
+    get() {
+        return 0
+    }
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun formatTimestamp(timestamp:Long):String {
@@ -63,7 +64,7 @@ private fun formatDate(dateTime: LocalDateTime):String{
 data class Message(
     val text: String,
     val senderFirstName: String,
-    val timestamp: Long
+    val timestamp: String
 )
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

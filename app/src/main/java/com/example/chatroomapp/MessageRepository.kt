@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.util.copy
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.channels.ChannelResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -56,6 +55,8 @@ class MessageViewModel :ViewModel() {
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>> get() = _messages
 
+    val senderFirstName =MutableLiveData<String>()
+
     private val _roomId = MutableLiveData<String>()
     private val _currentUser = MutableLiveData<User>()
     val currentUser: LiveData<User> get() = _currentUser
@@ -71,7 +72,7 @@ class MessageViewModel :ViewModel() {
 
     }
 
-    fun loadMessages(){
+    fun loadMessages() {
         viewModelScope.launch {
             if (_roomId.value != null) {
                 messageRepository.getChatMessages(_roomId.value.toString()).collect {
@@ -85,21 +86,31 @@ class MessageViewModel :ViewModel() {
         if (_currentUser.value != null) {
             val message = Message(
                 senderFirstName = _currentUser.value!!.firstName,
-                senderId = _currentUser.value!!.email,
-                text = text
+                senderId = _currentUser.value!!.email, 
+                text =text
             )
             viewModelScope.launch {
-                messageRepository.sendMessage(_roomId.value.toString(), message) {
+                when
+                        (messageRepository.sendMessage(_roomId.value.toString(), message)) {
                     is Result.Success -> Unit
                     is Result.Error -> {
+
+
+                    }
                 }
-
             }
-
         }
-
-
     }
+    fun setRoomId(roomId: String) {
+        _roomId.value = roomId
+        loadMessages()
+    }
+
+
+
+
+}
+
 
 
 
