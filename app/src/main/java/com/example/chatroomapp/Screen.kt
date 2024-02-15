@@ -32,13 +32,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 sealed class Screen(val route:String) {
     object LoginScreen:Screen("loginScreen")
     object SignUpScreen:Screen("signUpScreen")
-    object ChatRoomScreen:Screen("chatRoomScreen")
+    object ChatRoomsScreen:Screen("chatRoomScreen")
     object ChatScreen:Screen("chatScreen")
 }
-data class Room(
-    val id:String? = null,
-    val name:String
-)
+//data class Room(
+//    val id:String= "",
+//    val name:String = ""
+//)
 
 @Composable
 fun ChatRoomListScreen(
@@ -47,8 +47,6 @@ fun ChatRoomListScreen(
 ){
     var rooms: List<Room> by remember { mutableStateOf(emptyList()) }
     roomViewModel.rooms.observeAsState()?.value?.let { rooms = it }
-
-
 
     var showDialog by remember { mutableStateOf(false) }
     var name by remember{ mutableStateOf("") }

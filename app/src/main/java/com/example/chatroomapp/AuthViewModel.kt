@@ -17,11 +17,12 @@ object Injection{
 
     }
 }
+class AuthViewModel: ViewModel() {
 
 
 
-class AuthViewModel: ViewModel(){
-    private var userRepository = UserRepository( FirebaseAuth.getInstance(), FirebaseFirestore.getInstance()  )
+    private var userRepository =
+        UserRepository(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance())
 
     init {
         userRepository = UserRepository(
@@ -31,19 +32,22 @@ class AuthViewModel: ViewModel(){
 
     }
 
+
     private val _authResult = MutableLiveData<Result<Boolean>>()
-    val authResult:LiveData<Result<Boolean>> get() = _authResult
+    val authResult: LiveData<Result<Boolean>> get() = _authResult
 
 
-    fun signUp(email:String,password:String,firstname:String,lastname:String){
+
+    fun signUp(email: String, password: String, firstname: String, lastname: String) {
         viewModelScope.launch {
-            _authResult.value = userRepository.signUp(email,password,firstname,lastname)
-        }
-    }
-    fun login(email:String,password:String){
-        viewModelScope.launch {
-            _authResult.value = userRepository.login(email,password)
+            _authResult.value = userRepository.signUp(email, password, firstname, lastname)
         }
     }
 
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            _authResult.value = userRepository.login(email, password)
+        }
+    }
 }
+

@@ -27,10 +27,10 @@ fun NavigationGraph(navController: NavHostController,authViewModel: AuthViewMode
                     navController.navigate(Screen.SignUpScreen.route)
                 }
             ){
-                navController.navigate(Screen.ChatRoomScreen.route)
+                navController.navigate(Screen.ChatRoomsScreen.route)
             }
         }
-        composable(Screen.ChatRoomScreen.route) {
+        composable(Screen.ChatRoomsScreen.route) {
             ChatRoomListScreen{
                 navController.navigate("${Screen.ChatScreen.route}/${it.id}")
             }

@@ -24,8 +24,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.internal.ExceptionSuccessfullyProcessed.message
+//import kotlinx.coroutines.internal.ExceptionSuccessfullyProcessed.message
 
+data class Room(
+    val id:String= "",
+    val name:String = ""
+)
 @Composable
 fun ChatScreen(roomId:String,
                messageViewModel: MessageViewModel = viewModel(),
